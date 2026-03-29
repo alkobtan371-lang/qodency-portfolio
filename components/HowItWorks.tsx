@@ -14,9 +14,9 @@ const TypingCode = ({ children, delay = 0 }: { children: string | React.ReactNod
       <motion.div
         initial={{ width: "0%" }}
         whileInView={{ width: "100%" }}
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: "-20px" }}
         transition={{ duration: 1.5, delay: delay + 0.3, ease: "linear" }}
-        className="whitespace-pre overflow-hidden"
+        className="whitespace-pre-wrap break-all overflow-hidden"
       >
         {children}
       </motion.div>
@@ -81,7 +81,7 @@ const HowItWorks = () => {
                   forum
                 </span>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2 text-center">
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 text-center relative z-20">
                 نقاش وتحليل المشروع
               </h3>
             </motion.div>
@@ -101,7 +101,7 @@ const HowItWorks = () => {
                   </span>
                   <h4 className="text-xl font-bold text-white">تحليل المتطلبات</h4>
                 </div>
-                <div className="code-mockup mb-6 group-hover:border-[#c799ff]/30 transition-colors h-[120px]">
+                <div className="code-mockup mb-6 group-hover:border-[#c799ff]/30 transition-colors h-auto min-h-[120px] md:h-[120px]">
                   <TypingCode>
                     <span className="text-purple-400">async function</span> <span className="text-blue-400">analyzeVision</span>(clientIdea) &#123;<br />
                     &nbsp;&nbsp;<span className="text-gray-400">// Parsing requirements...</span><br />
@@ -128,7 +128,7 @@ const HowItWorks = () => {
                   </span>
                   <h4 className="text-xl font-bold text-white">هندسة الحلول</h4>
                 </div>
-                <div className="code-mockup mb-6 group-hover:border-[#c799ff]/30 transition-colors h-[120px]">
+                <div className="code-mockup mb-6 group-hover:border-[#c799ff]/30 transition-colors h-auto min-h-[120px] md:h-[120px]">
                   <TypingCode delay={0.5}>
                     <span className="text-gray-400">/* Database Schema */</span><br />
                     <span className="text-blue-400">Model</span> ClinicAI &#123;<br />
@@ -161,7 +161,7 @@ const HowItWorks = () => {
                   code_blocks
                 </span>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2 text-center">
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 text-center relative z-20">
                 التنفيذ وكتابة الأكواد
               </h3>
             </motion.div>
@@ -180,7 +180,7 @@ const HowItWorks = () => {
                   </span>
                   <h4 className="text-xl font-bold text-white">بناء الواجهات</h4>
                 </div>
-                <div className="code-mockup mb-6 group-hover:border-[#4af8e3]/30 transition-colors h-[120px] text-cyan-300">
+                <div className="code-mockup mb-6 group-hover:border-[#4af8e3]/30 transition-colors h-auto min-h-[120px] md:h-[120px] text-cyan-300">
                   <TypingCode>
                     &lt;<span className="text-blue-400">GlassmorphismCard</span><br />
                     &nbsp;&nbsp;<span className="text-purple-400">blur</span>="high"<br />
@@ -206,7 +206,7 @@ const HowItWorks = () => {
                   </span>
                   <h4 className="text-xl font-bold text-white">تطوير الخوادم</h4>
                 </div>
-                <div className="code-mockup mb-6 group-hover:border-[#4af8e3]/30 transition-colors h-[120px]">
+                <div className="code-mockup mb-6 group-hover:border-[#4af8e3]/30 transition-colors h-auto min-h-[120px] md:h-[120px]">
                   <TypingCode delay={0.3}>
                     <span className="text-gray-400">// Load Balancer Config</span><br />
                     <span className="text-purple-400">if</span> (cluster.isMaster) &#123;<br />
@@ -238,7 +238,7 @@ const HowItWorks = () => {
                   rocket_launch
                 </span>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2 text-center">
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 text-center relative z-20">
                 الفحص، الأمان، والنشر
               </h3>
             </motion.div>
@@ -265,7 +265,7 @@ const HowItWorks = () => {
                 </button>
               </div>
               
-              <div className="code-mockup border-[#a8ff78]/20 mb-8 h-[160px]">
+              <div className="code-mockup border-[#a8ff78]/20 mb-8 h-auto min-h-[160px] md:h-[160px]">
                 <div className="flex items-center gap-2 mb-4 border-b border-white/5 pb-2">
                   <div className="w-3 h-3 rounded-full bg-[#a8ff78] animate-pulse"></div>
                   <span className="text-gray-400 text-xs">Terminal: Deployment successful</span>

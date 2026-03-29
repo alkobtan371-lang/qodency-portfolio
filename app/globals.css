@@ -41,6 +41,10 @@ body {
   background-color: #050505;
   color: #ffffff;
   overflow-x: hidden;
+  position: relative;
+  width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: #a8ff78 #0a0a0a;
 }
 
 /* ========================================== */
@@ -131,6 +135,14 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     border-right: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 768px) {
+    .ultra-thin-glass {
+        backdrop-filter: blur(2px); /* Simplify for mobile performance */
+        -webkit-backdrop-filter: blur(2px);
+        will-change: transform, opacity; /* Keep only for mobile to help jitter */
+    }
 }
 .timeline-glow {
     background: linear-gradient(to bottom, #c799ff, #4af8e3, #a8ff78);

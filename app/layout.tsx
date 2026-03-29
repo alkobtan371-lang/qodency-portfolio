@@ -14,6 +14,9 @@ export const metadata: Metadata = {
     "مبرمج تطبيقات", "انشاء موقع الكتروني", "نظام عيادات طبية", "ClinicAI", "شركة تقنية"
   ],
   authors: [{ name: "Qodency Team" }],
+  verification: {
+    google: "ZveTw6sbu8wF7EbxTrgz3FJm41QqM8Q3yqSw_y4JOYI",
+  },
   icons: {
     icon: "/logo.svg",
     apple: "/logo.svg",
@@ -67,6 +70,7 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl" className="dark">
       <head>
+        <meta name="google-site-verification" content="ZveTw6sbu8wF7EbxTrgz3FJm41QqM8Q3yqSw_y4JOYI" />
         {/* إدراج الـ Schema بصيغة JSON-LD لرفع تصنيف الموقع في محركات البحث */}
         <script
           type="application/ld+json"

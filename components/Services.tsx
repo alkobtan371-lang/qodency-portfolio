@@ -97,7 +97,7 @@ const Services = () => {
                 <div className="w-14 h-14 rounded-full bg-[#a8ff78]/10 flex items-center justify-center border border-[#a8ff78]/20 mb-6 shadow-[0_0_15px_rgba(168,255,120,0.1)] group-hover:shadow-[0_0_20px_rgba(168,255,120,0.2)] transition-shadow">
                   <span className="material-symbols-outlined text-[#a8ff78]">code_blocks</span>
                 </div>
-                <h3 className="font-headline text-3xl font-bold text-white mb-4">أنظمة SaaS السحابية</h3>
+                <h2 className="font-headline text-3xl font-bold text-white mb-4">أنظمة SaaS السحابية</h2>
                 <p className="text-gray-400 leading-relaxed max-w-xl font-headline text-lg">
                   تحويل نماذج الأعمال المعقدة إلى منصات سحابية (SaaS) مؤتمتة بالكامل. نستخدم أحدث تقنيات الـ Microservices لضمان سرعة الاستجابة، سهولة التحديث، والقدرة على استيعاب آلاف المستخدمين المتزامنين بمرونة تامة.
                 </p>
@@ -106,9 +106,9 @@ const Services = () => {
             </div>
           </GlowCard>
 
-          {/* البطاقة الثانية */}
+          {/* البطاقة الثانية: التطبيقات */}
           <GlowCard 
-            glowColor="purple"
+            glowColor="blue"
             customSize
             className="md:col-span-1 min-h-75 border-none p-0"
           >
@@ -119,14 +119,68 @@ const Services = () => {
                   animate="animate"
                   className="absolute -bottom-4 -right-4 p-8 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity duration-500 pointer-events-none"
                >
+                <span className="material-symbols-outlined text-9xl text-white">smartphone</span>
+              </motion.div>
+              <div className="relative z-10 h-full flex flex-col">
+                <div className="w-14 h-14 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-500/20 mb-6 shadow-[0_0_15px_rgba(59,130,246,0.1)] group-hover:shadow-[0_0_20px_rgba(59,130,246,0.2)] transition-shadow">
+                  <span className="material-symbols-outlined text-blue-400">app_shortcut</span>
+                </div>
+                <h3 className="font-headline text-2xl font-bold text-white mb-4">بناء وتطوير التطبيقات (Apps)</h3>
+                <p className="text-gray-400 leading-relaxed text-sm font-headline mt-auto">
+                  برمجة وتطوير تطبيقات هواتف ذكية (iOS و Android) بأعلى معايير الأداء والسرعة، مع التركيز على تجربة مستخدم (UX) خالية من التعقيد والتكامل السلس مع الأنظمة الخلفية.
+                </p>
+              </div>
+            </div>
+          </GlowCard>
+
+          {/* البطاقة الثالثة: المواقع الإلكترونية */}
+          <GlowCard 
+            glowColor="orange"
+            customSize
+            className="md:col-span-1 min-h-75 border-none p-0"
+          >
+            <div className="p-8 md:p-10 h-full flex flex-col justify-between relative">
+              {gridPattern}
+               <motion.div 
+                  variants={iconFloatVariants}
+                  animate="animate"
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.01] group-hover:opacity-[0.03] transition-opacity duration-500 pointer-events-none"
+               >
+                <span className="material-symbols-outlined text-[12rem] text-orange-400">language</span>
+              </motion.div>
+              <div className="relative z-10 h-full flex flex-col">
+                <div className="w-14 h-14 rounded-full bg-orange-500/10 flex items-center justify-center border border-orange-500/20 mb-6 shadow-[0_0_15px_rgba(249,115,22,0.1)] group-hover:shadow-[0_0_20px_rgba(249,115,22,0.2)] transition-shadow">
+                  <span className="material-symbols-outlined text-orange-400">web</span>
+                </div>
+                <h3 className="font-headline text-2xl font-bold text-white mb-4">إنشاء وبناء المواقع الإلكترونية</h3>
+                <p className="text-gray-400 leading-relaxed text-sm font-headline mt-auto">
+                  تصميم وتطوير منصات ومواقع إلكترونية بأحدث التقنيات والإمكانيات (Web 3.0 & SSR)، لضمان أقصى سرعة استجابة وتوافق تام مع محركات البحث وكافة الأجهزة.
+                </p>
+              </div>
+            </div>
+          </GlowCard>
+
+          {/* البطاقة الرابعة (المدارس الذكية سابقاً الثانية) */}
+          <GlowCard 
+            glowColor="purple"
+            customSize
+            className="md:col-span-2 min-h-75 border-none p-0"
+          >
+            <div className="p-8 md:p-10 h-full flex flex-col justify-between relative">
+              {gridPattern}
+               <motion.div 
+                  variants={iconFloatVariants}
+                  animate="animate"
+                  className="absolute -bottom-4 left-4 p-8 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity duration-500 pointer-events-none"
+               >
                 <span className="material-symbols-outlined text-9xl text-[#c799ff]">account_balance</span>
               </motion.div>
               <div className="relative z-10">
                 <div className="w-14 h-14 rounded-full bg-[#c799ff]/10 flex items-center justify-center border border-[#c799ff]/20 mb-6 shadow-[0_0_15px_rgba(199,153,255,0.1)] group-hover:shadow-[0_0_20px_rgba(199,153,255,0.2)] transition-shadow">
                   <span className="material-symbols-outlined text-[#c799ff]">cast_for_education</span>
                 </div>
-                <h3 className="font-headline text-2xl font-bold text-white mb-4">المدارس الذكية</h3>
-                <p className="text-gray-400 leading-relaxed text-sm font-headline">
+                <h3 className="font-headline text-3xl font-bold text-white mb-4">المدارس الذكية</h3>
+                <p className="text-gray-400 leading-relaxed text-lg font-headline">
                   رقمنة المؤسسات التعليمية من الألف إلى الياء. بوابة موحدة تربط الإدارة، الكادر التدريسي، والطلاب بنظام ذكي يدير الحضور، المناهج، والتقييمات اللحظية.
                 </p>
               </div>

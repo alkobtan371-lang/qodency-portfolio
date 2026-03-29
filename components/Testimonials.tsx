@@ -40,7 +40,7 @@ function TestimonialCard({
     <GlowCard 
       glowColor="green" 
       customSize
-      className="w-64 md:w-72 flex-shrink-0 border-none p-0"
+      className="w-64 md:w-72 flex-shrink-0 border-none p-0 bg-[#0a0a0a]/95 !backdrop-blur-none"
     >
       <div className="p-4 md:p-5 h-full" dir="rtl">
         <div className="flex items-center gap-3 mb-3">
@@ -72,75 +72,61 @@ function TestimonialCard({
 function SmoothColumn({
   items,
   direction = "up",
-  speed = 0.4,
+  speed = 40, // Seconds for one full loop
 }: {
   items: (typeof testimonials)[number][];
   direction?: "up" | "down";
   speed?: number;
 }) {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const posRef = useRef(0);
-  const rafRef = useRef<number>(0);
   const pauseRef = useRef(false);
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    // We render items twice. The seamless point is at exactly half the
-    // scrollHeight — when we reach it we snap back to 0 (up) or -half (down).
-    const step = () => {
-      if (!pauseRef.current) {
-        const half = track.scrollHeight / 2;
-
-        if (direction === "up") {
-          posRef.current += speed;
-          if (posRef.current >= half) posRef.current -= half;
-          track.style.transform = `translateY(-${posRef.current}px)`;
-        } else {
-          posRef.current -= speed;
-          if (posRef.current <= -half) posRef.current += half;
-          track.style.transform = `translateY(${Math.abs(posRef.current)}px)`;
-        }
-      }
-      rafRef.current = requestAnimationFrame(step);
-    };
-
-    // Start at mid-point for "down" columns so they don't all begin at 0
-    if (direction === "down") {
-      posRef.current = -(track.scrollHeight / 4);
-    }
-
-    rafRef.current = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, [direction, speed]);
 
   return (
     <div
-      className="relative overflow-hidden flex-shrink-0"
+      className="relative overflow-hidden flex-shrink-0 testimonials-column"
       style={{ height: "100%" }}
-      onMouseEnter={() => { pauseRef.current = true; }}
-      onMouseLeave={() => { pauseRef.current = false; }}
     >
-      {/*
-        FIX: will-change: transform tells the browser to promote this element
-        to its own compositor layer, so the animation runs on the GPU without
-        repainting other layers — eliminating jank.
-      */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes marquee-vertical-up {
+          from { transform: translate3d(0, 0, 0); }
+          to { transform: translate3d(0, -50%, 0); }
+        }
+        @keyframes marquee-vertical-down {
+          from { transform: translate3d(0, -50%, 0); }
+          to { transform: translate3d(0, 0, 0); }
+        }
+        .animate-vertical-up {
+          animation: marquee-vertical-up var(--speed, 40s) linear infinite;
+        }
+        .animate-vertical-down {
+          animation: marquee-vertical-down var(--speed, 40s) linear infinite;
+        }
+        .testimonials-column:hover .marquee-track {
+          animation-play-state: paused;
+        }
+      `}} />
       <div
-        ref={trackRef}
-        className="flex flex-col gap-4"
-        style={{ willChange: "transform" }}
+        className={`flex flex-col gap-4 marquee-track relative ${
+          direction === "up" ? "animate-vertical-up" : "animate-vertical-down"
+        }`}
+        style={{ 
+          "--speed": `${speed}s`,
+          willChange: "transform",
+          backfaceVisibility: "hidden"
+        } as React.CSSProperties}
         dir="ltr"
       >
         {/* Original set */}
-        {items.map((r, i) => (
-          <TestimonialCard key={`a-${i}`} {...r} />
-        ))}
+        <div className="flex flex-col gap-4">
+          {items.map((r, i) => (
+            <TestimonialCard key={`a-${i}`} {...r} />
+          ))}
+        </div>
         {/* Duplicate set — creates the seamless loop */}
-        {items.map((r, i) => (
-          <TestimonialCard key={`b-${i}`} {...r} />
-        ))}
+        <div className="flex flex-col gap-4">
+          {items.map((r, i) => (
+            <TestimonialCard key={`b-${i}`} {...r} />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -214,43 +200,50 @@ export default function Testimonials({ testimonials: dynamicTestimonials }: Test
           so gradient fades clip properly.
         - Height is explicit so columns know how tall their viewport is.
       */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.2 }}
-        className="relative w-full max-w-6xl overflow-hidden z-10"
-        style={{ height: "520px" }}
+      {/* Main Container */}
+      <div 
+        className="relative w-full max-w-6xl overflow-hidden z-10 fade-in duration-1000"
+        style={{ height: "480px" }}
       >
         {/* 3-D tilt wrapper */}
         <div
-          className="flex flex-row items-start gap-4 md:gap-5 w-full h-full"
+          id="testimonials-track"
+          className="relative flex flex-row items-start gap-4 md:gap-5 w-full h-full"
           style={{
-            transform:
-              "perspective(900px) rotateX(22deg) rotateY(-12deg) rotateZ(8deg)",
+            transform: "none",
             transformOrigin: "center center",
+            willChange: "transform",
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
           }}
           dir="ltr"
         >
-          {/* Column 1 — up, baseline speed */}
-          <SmoothColumn items={col1} direction="up" speed={0.35} />
+          {/* Injecting media query styles directly for 3D effect */}
+          <style dangerouslySetInnerHTML={{ __html: `
+            @media (min-width: 768px) {
+              #testimonials-track {
+                transform: perspective(1200px) rotateX(10deg) rotateY(-5deg) rotateZ(2deg) !important;
+              }
+            }
+          `}} />
+          
+          {/* Column 1 — Always visible */}
+          <SmoothColumn items={col1} direction="up" speed={38} />
 
-          {/* Column 2 — down, slightly faster */}
-          <SmoothColumn items={col2} direction="down" speed={0.42} />
+          {/* Column 2 — Visible from tablet upwards */}
+          <div className="hidden sm:block relative">
+            <SmoothColumn items={col2} direction="down" speed={45} />
+          </div>
 
-          {/* Column 3 — up, slowest — hidden on small screens */}
-          <SmoothColumn
-            items={col3}
-            direction="up"
-            speed={0.28}
-          />
+          {/* Column 3 — Visible from md upwards */}
+          <div className="hidden md:block relative">
+            <SmoothColumn items={col3} direction="up" speed={52} />
+          </div>
 
-          {/* Column 4 — down, medium — hidden until lg */}
-          <SmoothColumn
-            items={col4}
-            direction="down"
-            speed={0.38}
-          />
+          {/* Column 4 — Visible from lg upwards */}
+          <div className="hidden lg:block relative">
+            <SmoothColumn items={col4} direction="down" speed={42} />
+          </div>
         </div>
 
         {/* Gradient fades — clip the edges cleanly */}
@@ -258,7 +251,7 @@ export default function Testimonials({ testimonials: dynamicTestimonials }: Test
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#050505] to-transparent z-20" />
         <div className="pointer-events-none absolute inset-y-0 left-0  w-20 bg-gradient-to-r from-[#050505] to-transparent z-20" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[#050505] to-transparent z-20" />
-      </motion.div>
+      </div>
     </section>
   );
 }
