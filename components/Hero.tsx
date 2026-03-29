@@ -42,6 +42,7 @@ const Hero = () => {
         <motion.div 
           key={row.id}
           className={`data-stream row-${row.id}`}
+          style={{ willChange: "transform" }}
           animate={{ x: ["0vw", "200vw"] }}
           transition={{ 
             duration: row.duration, 

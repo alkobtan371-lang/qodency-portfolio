@@ -27,10 +27,13 @@ export default function ParticlesBG() {
 
     // @ts-ignore
     if (window.particlesJS) {
+      const isMobile = window.innerWidth < 768;
+      const particleCount = isMobile ? 15 : 60; // Significantly reduced for mobile
+
       // @ts-ignore
       window.particlesJS("particles-js", {
         particles: {
-          number: { value: 60, density: { enable: true, value_area: 1200 } }, // Reduced density for performance
+          number: { value: particleCount, density: { enable: true, value_area: 1200 } }, // Reduced density for performance
           color: { value: colors.particles },
           shape: { type: "circle", stroke: { width: 0, color: colors.accent } },
           opacity: {

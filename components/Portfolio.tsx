@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { GlowCard } from "./ui/spotlight-card";
 
 interface Project {
@@ -163,10 +164,12 @@ const Portfolio = ({ projects = [] }: PortfolioProps) => {
                                   عرض تفاصيل الهندسة
                                 </button>
                              </div>
-                             <img 
+                             <Image 
                               src={project.image} 
                               alt={project.title} 
-                              className="w-full h-full object-cover rounded-2xl shadow-2xl grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110"
+                              fill
+                              className="object-cover rounded-2xl shadow-2xl grayscale-[0.5] group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110"
+                              sizes="(max-width: 768px) 100vw, 50vw"
                              />
                           </div>
                       ) : (

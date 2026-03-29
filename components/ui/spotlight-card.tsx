@@ -37,17 +37,24 @@ const GlowCard: React.FC<GlowCardProps> = ({
   const innerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Check if device supports hover (desktop/mouse)
+    const isMainThreadTouch = window.matchMedia('(hover: none)').matches;
+    if (isMainThreadTouch) return; // Skip spotlight on touch devices for performance
+
     const syncPointer = (e: PointerEvent) => {
       const { clientX: x, clientY: y } = e;
       
       if (cardRef.current) {
         const rect = cardRef.current.getBoundingClientRect();
-        // Calculate pointer position relative to the element if needed, 
-        // but the code uses fixed background which might be better for global movement
-        cardRef.current.style.setProperty('--x', x.toFixed(2));
-        cardRef.current.style.setProperty('--xp', (x / window.innerWidth).toFixed(2));
-        cardRef.current.style.setProperty('--y', y.toFixed(2));
-        cardRef.current.style.setProperty('--yp', (y / window.innerHeight).toFixed(2));
+        // Calculate pointer position relative to the element 
+        // to avoid background-attachment: fixed which is laggy on mobile
+        const relX = x - rect.left;
+        const relY = y - rect.top;
+        
+        cardRef.current.style.setProperty('--x', relX.toFixed(2));
+        cardRef.current.style.setProperty('--xp', (relX / rect.width).toFixed(2));
+        cardRef.current.style.setProperty('--y', relY.toFixed(2));
+        cardRef.current.style.setProperty('--yp', (relY / rect.height).toFixed(2));
       }
     };
 
@@ -88,11 +95,11 @@ const GlowCard: React.FC<GlowCardProps> = ({
       )`,
       backgroundColor: 'var(--backdrop, transparent)',
       backgroundSize: 'calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)))',
+      backgroundAttachment: 'scroll', // Standard scroll for better mobile performance
       backgroundPosition: '50% 50%',
-      backgroundAttachment: 'fixed',
       border: 'var(--border-size) solid var(--backup-border)',
       position: 'relative',
-      touchAction: 'none',
+      // touchAction: 'none', // Removed to restore native scrolling on mobile
     };
 
     // Add width and height if provided
@@ -115,7 +122,7 @@ const GlowCard: React.FC<GlowCardProps> = ({
       inset: calc(var(--border-size) * -1);
       border: var(--border-size) solid transparent;
       border-radius: calc(var(--radius) * 1px);
-      background-attachment: fixed;
+      background-attachment: scroll;
       background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
       background-repeat: no-repeat;
       background-position: 50% 50%;
