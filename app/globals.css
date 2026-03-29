@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+/* ========================================== */
+/* أكواد قسم آراء العملاء (3D Marquee)        */
+/* الحل الهندسي الجذري لفرض الحركة المستمرة   */
+/* ========================================== */
+.animate-marquee {
+  animation: marquee var(--duration) linear infinite;
+}
+
+.animate-marquee-vertical {
+  animation: marquee-vertical var(--duration) linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - var(--gap))); }
+}
+
+@keyframes marquee-vertical {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(-100% - var(--gap))); }
+}
+
+/* ========================================== */
+/* المتغيرات الأساسية (Shadcn UI & Qodency)    */
+/* ========================================== */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 0 0% 2%; /* لون أسود Qodency */
+    --foreground: 0 0% 98%;
+  }
+}
+
+body {
+  background-color: #050505;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* ========================================== */
+/* أكواد بوابة التشفير (Hero Gateway)         */
+/* ========================================== */
+.portal-spine {
+    position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(to bottom, transparent, #ffffff, #a8ff78, transparent);
+    box-shadow: 0 0 30px 4px rgba(255, 255, 255, 0.4), 0 0 70px 10px rgba(168, 255, 120, 0.3);
+    transform: translateX(-50%); z-index: 50;
+}
+.split-layer { position: absolute; inset: 0; width: 100%; height: 100%; }
+.layer-left { clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%); z-index: 20; }
+.layer-right { clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%); z-index: 20; }
+.data-stream {
+    position: absolute; display: flex; white-space: nowrap;
+    direction: ltr; left: -100vw; animation: flow-across 25s linear infinite;
+    /* Remove gap and use item width for exact sync */
+}
+@keyframes flow-across {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(200vw); }
+}
+.stream-item { 
+    font-weight: 700; letter-spacing: 2px;
+    display: inline-flex;
+    justify-content: flex-end; /* Align to leading edge (Right) for LTR sync */
+    align-items: center;
+    width: 45vw; /* Fixed cell width for perfect synchronization */
+    flex-shrink: 0;
+    padding-right: 2vw; /* Breathing room at the transition point */
+}
+
+@media (max-width: 768px) {
+    .stream-item { 
+        width: 50vw; /* Perfect half-width to prevent overlap */
+        padding-right: 4vw; 
+        letter-spacing: 1px;
+    }
+}
+
+.layer-left .stream-item { 
+    font-family: 'Tajawal', sans-serif; 
+    font-size: clamp(1rem, 3.5vw, 2.3rem); /* Responsive font size */
+    color: #ffffff; 
+}
+
+.layer-right .stream-item { 
+    font-family: 'Fira Code', monospace; 
+    font-size: clamp(0.65rem, 2.5vw, 1.4rem); /* Responsive font size */
+    font-weight: 500; 
+    color: #a8ff78; 
+    letter-spacing: 0px;
+    justify-content: flex-start; /* For the Code side, it starts emerging from the line (its Left edge) */
+    padding-left: 2vw;
+    padding-right: 0;
+}
+
+@media (max-width: 768px) {
+    .layer-right .stream-item { padding-left: 3vw; }
+    .layer-left .stream-item { font-size: 0.65rem; } /* Extreme reduction for mobile safety */
+    .layer-right .stream-item { font-size: 0.55rem; } 
+    .stream-item { width: 48vw; }
+}
+.row-1 { top: 35%; animation-duration: 22s; }
+.row-2 { top: 52%; animation-duration: 28s; animation-delay: -5s; }
+.row-3 { top: 69%; animation-duration: 25s; animation-delay: -12s; }
+
+@media (max-width: 768px) {
+    .row-1 { top: 30%; }
+    .row-2 { top: 44%; }
+    .row-3 { top: 58%; }
+}
+.portal-glow-overlay {
+    position: absolute; left: 50%; top: 0; bottom: 0; width: 100px;
+    background: linear-gradient(90deg, transparent, rgba(168, 255, 120, 0.1), transparent);
+    transform: translateX(-50%); z-index: 40; pointer-events: none;
+}
+
+/* ========================================== */
+/* أكواد الزجاج والأنماط العامة (Globals)     */
+/* ========================================== */
+.ultra-thin-glass {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.005));
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+}
+.timeline-glow {
+    background: linear-gradient(to bottom, #c799ff, #4af8e3, #a8ff78);
+    box-shadow: 0 0 20px 2px rgba(74, 248, 227, 0.4);
+}
+.floating-dust {
+    position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: drift-bg 60s linear infinite;
+}
+@keyframes drift-bg {
+    0% { background-position: 0 0; }
+    100% { background-position: 500px 500px; }
+}
+.code-mockup {
+    background-color: #0a0a0a; border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 0.5rem; padding: 1rem; direction: ltr; text-align: left;
+    font-family: 'Fira Code', monospace; font-size: 0.75rem; line-height: 1.6; color: #a8ff78;
+}
+.animate-spin-slow {
+    animation: spin 8s linear infinite;
+}
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
